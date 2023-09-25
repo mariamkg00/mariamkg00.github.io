@@ -1,5 +1,28 @@
 ---
-title: "mariamkg00.github.io"
+title: "Mariam Garcia"
+image: mariam_headshot.jpg
+toc: false
+about:
+  template: trestles
+  image-shape: rectangle
+  links: 
+    - text: LinkedIn
+      href: https://www.linkedin.com/in/mariam-k-garcia/
+      icon: linkedin
+    - text: GitHub
+      href: https://github.com/mariamkg00
+      icon: github
+    - text: Email
+      href: mailto::mkgarcia@ucsb.edu
+      icon: envelope-open
 ---
 
-Hi this is Mariam!
+Hi! My name is Mariam, and I am a current MEDS student at the Bren School at UCSB. In my free time, I enjoy going on nature walks, cooking, and discovering a new show. I am
+
+### Education
+
+Master of Environmental Data Science \| Bren School at UCSB \| 2024
+
+Bachelor's in Environmental Science and Policy \| UC Irvine \| 2022
+
+### Experience 
