@@ -2,7 +2,7 @@ project:
   type: website
   output-dir: docs 
 website:
-  title: "mariamkg00.github.io"
+  title: "Mariam Garcia"
   navbar:
     left:
       - href: index.qmd
