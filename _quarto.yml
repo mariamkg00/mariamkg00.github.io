@@ -2,21 +2,33 @@ project:
   type: website
   output-dir: docs 
 website:
-  title: "Mariam K. Garcia"
   navbar:
-    left:
+    title: "Mariam K. Garcia"
+    right:
       - href: index.qmd
         text: Home
       - about.qmd
       - href: resources.qmd
         text: Resources
-
+      - href: resume/Garcia_Mariam_Resume.pdf
+        text: Resume
+      
+    left:
+      - icon: github
+        href: https://github.com/mariamkg00
+  page-footer: 
+    background: light
+    left: "Copyright 2023, Mariam Garcia"
+    right: 
+      - icon : github
+        href: https://github.com/mariamkg00
 format:
   html:
-    theme: 
-      light: morph
-      dark: darkly
-    css: styles.css
+    theme: styles.scss
+    mainfont: Nunito
+    
+   # css: styles.css
+   
     toc: true
     page-layout: full
 
