@@ -8,6 +8,7 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
+      - blog.qmd
       - href: resources.qmd
         text: Resources
       - href: resume/Garcia_Mariam_Resume.pdf
