@@ -4,29 +4,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap');
 
 // colors 
-$sagegreen: #acbb90;
-$evergreen : #274625;
-$lightgreen: #d6dcc5;
-$orangebrown: #aa7c57;
-$beige: #fdf0d0;
-$cream : #eee1c7;
-$dark-purple : #53166A;
+$marianblue: #424874;
+$periwinkle: #DCD6F7;
+$blueperiwinkle: #A6B1E1;
+$frenchgray: #CACFD6;
+$azure: #D6E5E3;
 
 // base document colors
-$navbar-bg: $evergreen;
-$navbar-fg: $lightgreen;
-$body-bg : $sagegreen;
-$footer-bg : $beige;
-$link-color: $cream;
+$navbar-bg: $marianblue; 
+$navbar-fg: $periwinkle; 
+$body-bg: $frenchgray; 
+$footer-bg: $marianblue; 
+$link-color: $blueperiwinkle;
 
 /*-- scss:rules --*/
 h1, h2 {
   letter-spacing: 5px;
-  color: $evergreen;
+  color: $marianblue;
 }
 
 .title {
-  color : $lightgreen;
+  color : $marianblue;
 }
 
 .center-text {
