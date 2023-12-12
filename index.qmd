@@ -17,7 +17,7 @@ about:
       icon: envelope-open
 ---
 
-Hi! My name is Mariam, and I am a current MEDS student at the Bren School at UCSB. In my free time, I enjoy going on nature walks, cooking, and discovering a new show. I am an environmental justice advocate, and I aim to apply skills and knowledge gained at the Bren School to make an impactful difference on disadvantaged communities. 
+Hi! My name is Mariam, and I am a current MEDS student at the Bren School at UCSB. In my free time, I enjoy going on nature walks, cooking, and discovering a new show. I am an environmental justice advocate, and I aim to apply skills and knowledge gained at the Bren School to make an impactful difference on disadvantaged communities.
 
 ### Education
 
