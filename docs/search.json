@@ -4,7 +4,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "MPC Catalog Exploration\n\n\n\n\n\nEDS 220 class assignment\n\n\n\n\n\n\nMariam Garcia\n\n\n\n\n\n\nNo matching items"
+    "text": "MPC Catalog Exploration\n\n\n\n\n\nEDS 220 class assignment\n\n\n\n\n\n\nMariam Garcia\n\n\n\n\n\n\n  \n\n\n\n\nHistorical Redlining and its Impact on Commmunities in LA\n\n\n\n\n\n\n\nQuarto\n\n\nR\n\n\nMEDS\n\n\nGeospatial\n\n\n\n\nGeospatial analysis on different HOLC graded areas\n\n\n\n\n\n\nDec 12, 2023\n\n\nMariam Garcia\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -75,5 +75,12 @@
     "title": "Mariam Garcia",
     "section": "",
     "text": "Hi! My name is Mariam, and I am a current MEDS student at the Bren School at UCSB. In my free time, I enjoy going on nature walks, cooking, and discovering a new show. I am\n\nEducation\nMaster of Environmental Data Science | Bren School at UCSB | 2024\nBachelor’s in Environmental Science and Policy | UC Irvine | 2022\n\n\nExperience"
+  },
+  {
+    "objectID": "blog/geospatial-analysis-of-HOLC-in-LA/index.html",
+    "href": "blog/geospatial-analysis-of-HOLC-in-LA/index.html",
+    "title": "Historical Redlining and its Impact on Commmunities in LA",
+    "section": "",
+    "text": "CitationBibTeX citation:@online{garcia2023,\n  author = {Garcia, Mariam},\n  title = {Historical {Redlining} and Its {Impact} on {Commmunities} in\n    {LA}},\n  date = {2023-12-12},\n  url = {https://mariamkg00.github.io/blog/geospatial-analysis-of-HOLC-in-LA/},\n  langid = {en}\n}\nFor attribution, please cite this work as:\nGarcia, Mariam. 2023. “Historical Redlining and Its Impact on\nCommmunities in LA .” December 12, 2023. https://mariamkg00.github.io/blog/geospatial-analysis-of-HOLC-in-LA/."
   }
 ]

@@ -1,0 +1,13 @@
+---
+title: "Historical Redlining and its Impact on Commmunities in LA "
+description: "Geospatial analysis on different HOLC graded areas"
+author:
+  - name: Mariam Garcia
+    url: https://mariamkg00.github.io/
+    affiliation: Master of Environmental Data Science Program @ The Bren School (UCSB) 
+    affiliation-url: https://ucsb-meds.github.io/ 
+date: 12-12-2023
+categories: [Quarto, R, MEDS, Geospatial] # self-defined categories
+citation: 
+  url: https://mariamkg00.github.io/blog/geospatial-analysis-of-HOLC-in-LA/ 
+---

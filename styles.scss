@@ -20,13 +20,15 @@ $link-color: $blueperiwinkle;
 /*-- scss:rules --*/
 h1, h2 {
   letter-spacing: 5px;
-  color: $marianblue;
+  color: $frenchgray;
 }
 
 .title {
-  color : $marianblue;
-}
+  color : $frenchgray;
+  text-size : 30px;
 
 .center-text {
   text-align: center;
+}
+  
 }
