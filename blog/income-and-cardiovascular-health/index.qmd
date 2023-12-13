@@ -7,6 +7,10 @@ author:
     affiliation: MEDS
     affiliation-url: https://bren.ucsb.edu/masters-programs/master-environmental-data-science/academics-meds
 date: 12-13-2023
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
 categories: [Quarto, MEDS, Statistics, Environmental Justice]
 citation:
   url: https://github.com/mariamkg00/eds-222-finalproject

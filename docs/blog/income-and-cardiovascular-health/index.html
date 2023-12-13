@@ -264,6 +264,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reading in the data </span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>income_la <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'./data/Median_Income_and_AMI_(census_tract).csv'</span>) <span class="sc">%&gt;%</span> </span>
@@ -288,6 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>income_cardio <span class="ot">&lt;-</span> <span class="fu">lm</span>(cardiovascular_disease <span class="sc">~</span> med_hh_income, <span class="at">data =</span> income_water_la)</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(income_cardio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -310,12 +313,15 @@ F-statistic:   557 on 1 and 1903 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>count_income <span class="ot">&lt;-</span> income_water_la <span class="sc">%&gt;%</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ami_category) <span class="sc">%&gt;%</span> </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span>  </span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">`</span><span class="at">Number of Census Groups</span><span class="st">`</span> <span class="ot">=</span> n,</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">AMI Category</span><span class="st">`</span> <span class="ot">=</span> ami_category)</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(count_income)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <thead>
@@ -355,6 +361,8 @@ F-statistic:   557 on 1 and 1903 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li><p>633 census tract groups fall under the <code>Very Low Income</code> category.</p></li>
 </ul>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(income_water_la, <span class="fu">aes</span>(<span class="at">x =</span> med_hh_income, <span class="at">y =</span> cardiovascular_disease, <span class="at">col =</span> education))<span class="sc">+</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">'lm'</span>, <span class="at">col =</span> <span class="st">'red'</span>)<span class="sc">+</span></span>
@@ -363,11 +371,14 @@ F-statistic:   557 on 1 and 1903 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">'     Median Income vs. Cardiovascular Disease'</span>)<span class="sc">+</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_poly_eq</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(income_water_la, <span class="fu">aes</span>(<span class="at">x =</span> education, <span class="at">y =</span> cardiovascular_disease))<span class="sc">+</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">'#CBC3E3'</span>)<span class="sc">+</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">'lm'</span>, <span class="at">col =</span> <span class="st">'#9F2B68'</span>)<span class="sc">+</span></span>
@@ -376,6 +387,7 @@ F-statistic:   557 on 1 and 1903 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">'     Education Level vs. Cardiovascular Disease'</span>)<span class="sc">+</span></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_poly_eq</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
@@ -384,6 +396,8 @@ F-statistic:   557 on 1 and 1903 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## hypothesis test construction</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># summary statistics for cardiovascular disease related ed visits</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -394,6 +408,7 @@ F-statistic:   557 on 1 and 1903 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cardio_stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
   ami_category           mean    sd
@@ -409,6 +424,8 @@ F-statistic:   557 on 1 and 1903 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>However, the number of census tract groups in the <code>Extremely Low Income</code> AMI group is significantly lower than the number of census groups in the <code>Above Moderate Income</code>. In an effort to make this analysis as representative as possible, I will be using the data from census tract groups in the <code>Very Low Income</code> AMI category.</p>
 <p>Using the <code>stargazer</code> package, I will conduct three different linear models to determine which added variables positively affect the adjusted <strong>R2</strong> value.</p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># table of r squared values with different variables added </span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(cardiovascular_disease <span class="sc">~</span> med_hh_income <span class="sc">+</span> pm2_5 <span class="sc">+</span> education, <span class="at">data =</span> income_water_la)</span>
@@ -420,6 +437,7 @@ F-statistic:   557 on 1 and 1903 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">covariate.labels=</span><span class="fu">c</span>(<span class="st">"Median Household Income"</span>,<span class="st">"PM 2.5 Concentration"</span>,<span class="st">"% Population &gt; 25 with less than a High School Education"</span>),</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">omit.stat =</span> <span class="fu">c</span>(<span class="st">'f'</span>),</span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">font.size =</span> <span class="st">'small'</span>,<span class="at">align =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Regression Results
@@ -473,6 +491,8 @@ Note:                                                                           
 <p><span class="math display">\[H_{0}: \mu_{cardiodiseaseinVeryrLowInc} - \mu_{cardiodiseaseinModInc}  = 0\]</span> <span class="math display">\[H_{A}:  \mu_{cardiodiseaseinVeryLowInc} - \mu_{cardiodiseaseinModInc} \neq 0\]</span></p>
 <p><span class="math display">\[SE = \sqrt{\frac{s_1^2}{n_1} + \frac{s^2_2}{n_2}}\]</span></p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># computing a point estimate for both groups</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>mu_cardio_low <span class="ot">&lt;-</span> income_water_la <span class="sc">%&gt;%</span> </span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ami_category <span class="sc">==</span> <span class="st">'Very Low Income'</span>) <span class="sc">%&gt;%</span> </span>
@@ -486,12 +506,15 @@ Note:                                                                           
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>point_est_cardio <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mu_cardio_low <span class="sc">-</span> mu_cardio_mod) <span class="co"># will use for z-score </span></span>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(point_est_cardio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5.975809</code></pre>
 </div>
 </div>
 <p>The point estimate value of <code>5.98</code> indicates that there is a difference between the two samples.</p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># computing standard error</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> income_water_la <span class="sc">%&gt;%</span> </span>
@@ -518,20 +541,27 @@ Note:                                                                           
 <span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="co"># computing z-score</span></span>
 <span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> (point_est_cardio <span class="sc">-</span> <span class="dv">0</span>)<span class="sc">/</span>standard_error</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>The z-score of <code>24.22</code> indicates that the observed difference in cardiovascular disease related ED visits between Above Moderate Income census tracts and Very Low Income census tract groups is 24.2 standard deviations <strong>above</strong> the null of zero difference.</p>
 <p>Now that I have a calculated z-score, I am then able to calculate the p-value. I decided to input <code>lower.tail = TRUE</code> because I am finding the probability that the lower tail of my confidence interval is no bigger than my z score of <code>24.22</code>.</p>
 <p>* In other words, I am using <code>lower.tail = TRUE</code> because we are trying to calculate the probability to the <strong>left</strong> of 0 .</p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(z,<span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p_value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6.561525e-130</code></pre>
 </div>
 </div>
 <p>Alternatively, this hypothesis test can be executed using a <code>t.test()</code></p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(income_water_la<span class="sc">$</span>cardiovascular_disease[income_water_la<span class="sc">$</span>ami_category <span class="sc">==</span> <span class="st">'Very Low Income'</span>], income_water_la<span class="sc">$</span>cardiovascular_disease[income_water_la<span class="sc">$</span>ami_category <span class="sc">==</span> <span class="st">'Above Moderate Income'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -552,6 +582,8 @@ mean of x mean of y
 <h5 class="anchored" data-anchor-id="calculating-a-95-confidence-interval">Calculating a 95% confidence interval</h5>
 <p>I’d like to construct a confidence interval apart from the derived interval in order to calculate a 5% probability that I am able to observe the point estimate. Calculating this confidence interval means that I will likely be 5% wrong that the difference between ED visits for heart attacks is between this range.</p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% confidence interval </span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>critical_val <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="fl">0.025</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
@@ -560,6 +592,7 @@ mean of x mean of y
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>upper_ci <span class="ot">&lt;-</span> <span class="fu">round</span>(point_est_cardio <span class="sc">+</span> critical_val<span class="sc">*</span>standard_error,<span class="dv">2</span>)</span>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"There is a 95% probability that ["</span>,lower_ci, <span class="st">","</span>, upper_ci, <span class="st">"] contains the difference in cardiovascular related ED visits across above moderate income and extremely low income census tract groups. "</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "There is a 95% probability that [5.49,6.46] contains the difference in cardiovascular related ED visits across above moderate income and extremely low income census tract groups. "</code></pre>
 </div>
@@ -586,6 +619,8 @@ mean of x mean of y
 <section id="supplemental-figures" class="level3">
 <h3 class="anchored" data-anchor-id="supplemental-figures">Supplemental Figures</h3>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># qqplot</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> income_water_la)<span class="sc">+</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>(<span class="fu">aes</span>(<span class="at">sample =</span> income_water_la<span class="sc">$</span>cardiovascular_disease), <span class="at">color =</span> <span class="st">'#352C9E'</span>)<span class="sc">+</span></span>
@@ -595,6 +630,7 @@ mean of x mean of y
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">'Sample Quantiles'</span>,</span>
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">'Heart Attack-Related ED Visits (per 10,000)'</span>)<span class="sc">+</span></span>
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Use of `income_water_la$cardiovascular_disease` is discouraged.
 ℹ Use `cardiovascular_disease` instead.
@@ -607,12 +643,15 @@ Use of `income_water_la$cardiovascular_disease` is discouraged.
 </div>
 <p>This <code>qqplot</code> of the cardiovascular disease variable tells me that there is a slight divergence from the normal distribution line in the lower quantiles, indicating that values in this quantile range are higher relative to a normal distribution. Moreover, this <code>qqplot</code> also tells me that it follows a normal distribution in the higher quantiles.</p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> income_water_la, <span class="fu">aes</span>(<span class="at">x =</span> med_hh_income))<span class="sc">+</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>, <span class="at">fill =</span> <span class="st">'#AAACE4'</span>)<span class="sc">+</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'Median Household Income (USD)'</span>,</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">'Number of Census Tract Groups'</span>,</span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">'Distribution of Median Income of LA County Census Tract Groups'</span>)<span class="sc">+</span></span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
