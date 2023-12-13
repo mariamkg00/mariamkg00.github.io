@@ -11,3 +11,5 @@ categories: [Quarto, R, MEDS, Geospatial] # self-defined categories
 citation: 
   url: https://mariamkg00.github.io/blog/geospatial-analysis-of-HOLC-in-LA/ 
 ---
+
+## Background 
