@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/blog/aqi-analysis-santa-barbara/aqi-analysis-santa-barbara.html",
       "/blog/python-redner/STAC-search.html",
       "/blog/income-and-cardiovascular-health/index.html",
       "/blog/geospatial-analysis-of-HOLC-in-LA/index.html"
