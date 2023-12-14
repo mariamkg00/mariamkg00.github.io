@@ -7,6 +7,7 @@ author:
     affiliation: MEDS
     affiliation-url: https://bren.ucsb.edu/masters-programs/master-environmental-data-science/academics-meds
 date: 12-13-2023
+image : los-angeles.png
 format:
   html:
     code-fold: true
