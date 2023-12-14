@@ -27,7 +27,7 @@ In this project, I aim to investigate whether or not redlined communities in Los
 
 ## Data Information
 
-To obtain demographic and environmental data by census tract in Los Angeles, we will be using tdata from the **EPA's Environmental Justice Screening and Mapping Tool.**
+To obtain demographic and environmental data by census tract in Los Angeles, we will be using data from the **EPA's Environmental Justice Screening and Mapping Tool.**
 
 For HOLC grade designations in Los Angeles, we will be using a GeoJSON file from the Digital Scholars Lab containing redlining information.
 
