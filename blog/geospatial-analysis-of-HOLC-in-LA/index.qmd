@@ -107,7 +107,7 @@ print(nrow(eighty_percentile_pm_sf)/nrow(la_county) * 100)
 
 Approximately **17.03%** of census block groups in LA County are above the 80th percentile for Particulate Matter AND for Superfund proximity.
 
-#### Redlining 
+#### Redlining
 
 I will use the `st_read()` function along with `st_make_valid()` in order to incorporate valid geometries.
 
