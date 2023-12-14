@@ -12,6 +12,7 @@ format:
     code-summary: "Show the code"
 date: 12-12-2023
 categories: [Quarto, R, MEDS, Geospatial] # self-defined categories
+image: holc-grade.png
 citation: 
   url: https://mariamkg00.github.io/blog/geospatial-analysis-of-HOLC-in-LA/ 
 ---
@@ -49,9 +50,9 @@ library(sp)
 library(gt)
 ```
 
-Reading in EJScreen data and filter to Los Angeles County
+Reading in EJScreen data and filter to Los Angeles County using `st_read()`
 
-```{r}
+```{r echo = FALSE, message = FALSE}
 # reading in EJ Screen data
 ejscreen <- st_read("data/EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb/")
 
@@ -63,7 +64,7 @@ la_county <- ejscreen %>%
 
 In order to visualize waste water discharge by census block groups, I will use `tmap()` in order to help identify which census block groups are above the 95th percentile of waste water discharge while adding a centroid using `st_centroid()`
 
-```{r warning = FALSE}
+```{r warning = FALSE, message = FALSE}
 # making centroids using st_centroid()
 
 la_ejscreen_centroids <- st_centroid(la_county) %>% 
@@ -72,7 +73,7 @@ la_ejscreen_centroids <- st_centroid(la_county) %>%
 
 #using tmap to plot 
 tm_shape(la_county)+
-  tm_fill(fill = 'PWDIS', palette = 'BuGn',
+  tm_fill(fill = 'PWDIS', palette = 'Purples',
               title = 'Wastewater Discharge')+
   tm_shape(la_ejscreen_centroids)+
   tm_dots(fill = 'red')+
@@ -83,7 +84,7 @@ tm_shape(la_county)+
 
 ```
 
-In order to find census block groups with less than 5% of the population is considered low income.
+In order to find census block groups with less than 5% of the population is considered low income, we will use dplyr's `filter()` function to specify the parameters.
 
 ```{r}
 low_income_lac <- la_county %>% 
@@ -165,8 +166,52 @@ summary_holc <- holc_groups_la %>%
 gt(summary_holc)
 ```
 
+**Discussion**
+
+As the HOLC grade goes from A to D, I noticed that the average percentage of low income residents in the given area increases. It could also be noted that the census block groups within HOLC grade D have the highest average percentile with particulate matter. The historic background behind HOLC grading can also help explain why certain neighborhoods are low income, only because low income neighborhoods were perceived as risky to grant home ownership loans. The effects of a previously graded neighborhood still lingers, as much of the higher amounts of pollution burden and lower socioeconomic statuses lie within HOLC Grade D.
+
 #### Investigating the Impacts of Redlining on Biodiversity Observations
 
 We will only be looking at bird observation data from the year 2022, and we will calculate the percentage of bird observations within each redlining category.
 
-First, I am reading in the data with `st_read()` function.
+First, I am reading in the data with `st_read()` function. Then I will use `st_join()` in order to spatially join the two datas ets.
+
+```{r}
+#reading in the bird data and filtering for the year 2022
+bird_data <- st_read(('data/gbif-birds-LA')) %>% 
+  filter(year == '2022')
+
+birds_in_holc <- st_join(bird_data, LA_redlining, join = st_intersects, left = FALSE)
+
+summary_birds_holc <- birds_in_holc %>% 
+  group_by(grade) %>% 
+  summarize(count = n()) %>% 
+  mutate(percentage = (count/sum(count)) *100) %>% 
+  st_drop_geometry() %>% 
+  na.omit()
+
+gt(summary_birds_holc)
+```
+
+Plotting the results of bird observations within each HOLC grade using `ggplot()`
+
+```{r}
+ggplot(data = summary_birds_holc, aes(x = grade, y = percentage))+
+  geom_bar(stat = 'identity', fill = '#DCD6F7', col = '#023020')+
+  theme_minimal()+
+  labs(x = 'HOLC Grade', y = 'Percentage of Birds Found', title = 'Bird Observations within Neighborhoods within HOLC Grades')
+```
+
+I did find it interesting that HOLC grade C had the most observations of birds in this particular area, only because I hypothesized that groups A and/or B would have more bird sightings. My initial thought process could be explained by the fact that these two areas , on average, have lower percentages of lower income residents. In turn, I assumed that this would equate to more levels of government funding and higher areas of green spaces.
+
+### Conclusion
+
+In summary, the results found in this project were astoundingly surprising as the effects of redlining still remain and hurt communities in Los Angeles. Although the HOLC grading system dealt with loan eligibility, the snowball effect of rejecting loans and financial security to minorities who were deemed untrustworthy has led to generational harm and life-altering effects.
+
+### Works Cited
+
+Woods, L. L. (2012). The Federal Home Loan Bank Board, Redlining, and the National Proliferation of Racial Lending Discrimination, 1921--1950. Journal of Urban History, 38(6), 1036-1059. https://doi.org/10.1177/0096144211435126
+
+#### Github Repository
+
+For more detailed information about my coding process, please see my Github [link](https://github.com/mariamkg00/eds-223-holc-birds-LA).
