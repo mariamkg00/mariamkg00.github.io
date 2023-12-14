@@ -6,10 +6,141 @@ author:
     url: https://mariamkg00.github.io/
     affiliation: Master of Environmental Data Science Program @ The Bren School (UCSB) 
     affiliation-url: https://ucsb-meds.github.io/ 
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
 date: 12-12-2023
 categories: [Quarto, R, MEDS, Geospatial] # self-defined categories
 citation: 
   url: https://mariamkg00.github.io/blog/geospatial-analysis-of-HOLC-in-LA/ 
 ---
 
-## Background 
+## Background
+
+This blog post aims to highlight the lasting effects of zoning, particularly in Los Angeles. The incorporation of HOLC (Homeowners Loan Corporation Act) has led to long lasting and detrimental effects in which economic security of minority communities was no longer deemed a possibility. The Federal Home Loan Bank Board (FHLBB) set standards in place to which neighborhood demographics (i.e percent of minority population) was deemed a factor in loan eligibility. Following the stock market crash and Great Depression, countless banks across the country began to close. According to the Urban History Association, "as banks failed by the thousands, freezing credit markets and increasing unemployment, foreclosures skyrocketed and threatened to destroy the national housing industry" (Woods 2012). In order to remediate mass daily foreclosures, Congress then put in place the Home Owners' Loan Corporation (HOLC) in order to help desperate homeowners. However, HOLC associated unsuitable candidates for a loan with their ethnic backgrounds, leaving many minority communities behind in moving forward from economic despair.
+
+Current ongoing cases of environmental injustices/racism are arguably consequences of prejudiced enforcement of the past. America's long history of racial segregation still has left its mark in Los Angeles. HOLC and their ranking systems were used to determine whether a certain neighborhood or region is suitable for a loan. Their ranking system, (A (green), B (blue), C (yellow), D (red)) was then used to block access to loans for home ownership, which is currently known as 'redlining'. However, redlined communities tend to have less greenery and are typically hotter than other neighborhoods/communities.
+
+In this project, I aim to investigate whether or not redlined communities in Los Angeles have higher rates of pollution burden, have less reports of bird sightings as an indication of biodiversity.
+
+## Data Information
+
+To obtain demographic and environmental data by census tract in Los Angeles, we will be using tdata from the **EPA's Environmental Justice Screening and Mapping Tool.**
+
+For HOLC grade designations in Los Angeles, we will be using a GeoJSON file from the Digital Scholars Lab containing redlining information.
+
+Lastly ,for biodiversity data represented by bird sightings, we will use data from the Global Biodiversity Information Facility.
+
+Since the data was too big to upload, I uploaded them into a zip folder which can be accessed [here]{.underline}.
+
+#### Investigating the Legacy of Redlining in Current Environmental Injustice
+
+Loading necessary packages and data
+
+```{r message = FALSE, warning=FALSE}
+library(tmap)
+library(tidyverse)
+library(sf)
+library(spData)
+library(here)
+library(dplyr)
+library(sp)
+library(gt)
+```
+
+Reading in EJScreen data and filter to Los Angeles County
+
+```{r}
+# reading in EJ Screen data
+ejscreen <- st_read("data/EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb/")
+
+# filtering to LA county 
+
+la_county <- ejscreen %>% 
+  filter(CNTY_NAME %in% c("Los Angeles County"))
+```
+
+In order to visualize waste water discharge by census block groups, I will use `tmap()` in order to help identify which census block groups are above the 95th percentile of waste water discharge while adding a centroid using `st_centroid()`
+
+```{r warning = FALSE}
+# making centroids using st_centroid()
+
+la_ejscreen_centroids <- st_centroid(la_county) %>% 
+  filter(P_PWDIS > 95)
+
+
+#using tmap to plot 
+tm_shape(la_county)+
+  tm_fill(fill = 'PWDIS', palette = 'BuGn',
+              title = 'Wastewater Discharge')+
+  tm_shape(la_ejscreen_centroids)+
+  tm_dots(fill = 'red')+
+  tm_graticules()+
+  tm_compass()+
+  tm_layout(main.title = 'Map of Wastewater Discharge by Census Block Groups in LA County') +
+  tm_scale_bar(position = c("LEFT","BOTTOM"))
+
+```
+
+In order to find census block groups with less than 5% of the population is considered low income.
+
+```{r}
+low_income_lac <- la_county %>% 
+  filter(LOWINCPCT < .05)
+
+#Calculating percentages based on the number of rows in each new subset. 
+print(nrow(low_income_lac)/nrow(la_county)* 100)
+
+```
+
+Of the total census block groups in Los Angeles County, only **6.11%** of census block groups have less than a 5% low income population.
+
+In order to find percent of census block groups that are above the 80th percentile for PM 2.5 AND above the 80th percentile for Superfund proximity, we will use the `filter()` function.
+
+```{r}
+eighty_percentile_pm_sf <- la_county %>% 
+  filter(P_PM25 > 80 & P_PNPL > 80) %>% 
+  drop_na()
+print(nrow(eighty_percentile_pm_sf)/nrow(la_county) * 100)
+```
+
+Approximately **17.03%** of census block groups in LA County are above the 80th percentile for Particulate Matter AND for Superfund proximity.
+
+#### Redlining 
+
+I will use the `st_read()` function along with `st_make_valid()` in order to incorporate valid geometries.
+
+```{r message = FALSE}
+LA_redlining <- st_read("https://dsl.richmond.edu/panorama/redlining/static/citiesData/CALosAngeles1939/geojson.json") %>%
+  st_make_valid()
+```
+
+In order to make a map of historical redlining boundaries colored by HOLC grade, I will use `tm_shape()` along with making an associated color palette to distinguish different HOLC grades.
+
+```{r message = FALSE, warning = FALSE}
+# making appropriate color palette for HOLC ranking system
+holc_grades <- c('#5DB271','#5D92B2','#ECDD29','#F14646')
+tm_shape(LA_redlining)+
+  tm_polygons(fill = 'grade', palette = holc_grades)+
+  tm_scale_bar()+
+  tm_compass()+
+  tm_graticules()+
+  tm_layout(main.title = 'Map of Historical Redlining Boundaries in LA County')+
+tm_shape(la_county)+
+  tm_borders(col_alpha = 0.5)
+```
+
+In order to find the number of census block groups that fall within areas with HOLC grades, I will use `st_within()`. The reason it is best to use `st_within()` is to
+
+But first, I need to change the CRS of the Los Angeles EJ screen data.
+
+```{r}
+la_county <- st_transform(la_county, crs = st_crs(LA_redlining))
+
+holc_groups_la <- st_join(la_county, LA_redlining, join = st_within, left = FALSE)
+
+print(nrow(holc_groups_la))
+```
+
+There are **920 census block groups** that fall within areas with assigned HOLC grades in Los Angeles County.

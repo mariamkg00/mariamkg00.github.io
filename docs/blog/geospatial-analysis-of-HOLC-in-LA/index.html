@@ -23,6 +23,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -175,6 +209,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a></li>
+  <li><a href="#data-information" id="toc-data-information" class="nav-link" data-scroll-target="#data-information">Data Information</a></li>
   </ul>
 </nav>
     </div>
@@ -186,8 +221,88 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="background" class="level2">
 <h2 class="anchored" data-anchor-id="background">Background</h2>
+<p>This blog post aims to highlight the lasting effects of zoning, particularly in Los Angeles. The incorporation of HOLC (Homeowners Loan Corporation Act) has led to long lasting and detrimental effects in which economic security of minority communities was no longer deemed a possibility. The Federal Home Loan Bank Board (FHLBB) set standards in place to which neighborhood demographics (i.e percent of minority population) was deemed a factor in loan eligibility. Following the stock market crash and Great Depression, countless banks across the country began to close. According to the Urban History Association, “as banks failed by the thousands, freezing credit markets and increasing unemployment, foreclosures skyrocketed and threatened to destroy the national housing industry” (Woods 2012). In order to remediate mass daily foreclosures, Congress then put in place the Home Owners’ Loan Corporation (HOLC) in order to help desperate homeowners. However, HOLC associated unsuitable candidates for a loan with their ethnic backgrounds, leaving many minority communities behind in moving forward from economic despair.</p>
+<p>Current ongoing cases of environmental injustices/racism are arguably consequences of prejudiced enforcement of the past. America’s long history of racial segregation still has left its mark in Los Angeles. HOLC and their ranking systems were used to determine whether a certain neighborhood or region is suitable for a loan. Their ranking system, (A (green), B (blue), C (yellow), D (red)) was then used to block access to loans for home ownership, which is currently known as ‘redlining’. However, redlined communities tend to have less greenery and are typically hotter than other neighborhoods/communities.</p>
+<p>In this project, I aim to investigate whether or not redlined communities in Los Angeles have higher rates of pollution burden, have less reports of bird sightings as an indication of biodiversity.</p>
+</section>
+<section id="data-information" class="level2">
+<h2 class="anchored" data-anchor-id="data-information">Data Information</h2>
+<p>To obtain demographic and environmental data by census tract in Los Angeles, we will be using tdata from the <strong>EPA’s Environmental Justice Screening and Mapping Tool.</strong></p>
+<p>For HOLC grade designations in Los Angeles, we will be using a GeoJSON file from the Digital Scholars Lab containing redlining information.</p>
+<p>Lastly ,for biodiversity data represented by bird sightings, we will use data from the Global Biodiversity Information Facility.</p>
+<p>Since the data was too big to upload, I uploaded them into a zip folder which can be accessed <u>here</u>.</p>
+<section id="investigating-the-legacy-of-redlining-in-current-environmental-injustice" class="level4">
+<h4 class="anchored" data-anchor-id="investigating-the-legacy-of-redlining-in-current-environmental-injustice">Investigating the Legacy of Redlining in Current Environmental Injustice</h4>
+<p>Loading necessary packages and data</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spData)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Reading in EJScreen data and filter to Los Angeles County</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reading in EJ Screen data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ejscreen <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `EJSCREEN_StatePctiles_with_AS_CNMI_GU_VI' from data source 
+  `C:\Users\maria\Documents\git\mariamkg00.github.io\blog\geospatial-analysis-of-HOLC-in-LA\data\EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb' 
+  using driver `OpenFileGDB'
+Simple feature collection with 243021 features and 223 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -19951910 ymin: -1617130 xmax: 16259830 ymax: 11554350
+Projected CRS: WGS 84 / Pseudo-Mercator</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filtering to LA county </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>la_county <span class="ot">&lt;-</span> ejscreen <span class="sc">%&gt;%</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(CNTY_NAME <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Los Angeles County"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>In order to visualize waste water discharge by census block groups, I will use <code>tmap()</code> in order to help identify which census block groups are above the 95th percentile of waste water discharge while adding a centroid using <code>st_centroid()</code></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># making centroids using st_centroid()</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>la_ejscreen_centroids <span class="ot">&lt;-</span> <span class="fu">st_centroid</span>(la_county) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(P_PWDIS <span class="sc">&gt;</span> <span class="dv">95</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#using tmap to plot </span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(la_county)<span class="sc">+</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(<span class="at">fill =</span> <span class="st">'PWDIS'</span>, <span class="at">palette =</span> <span class="st">'BuGn'</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">title =</span> <span class="st">'Wastewater Discharge'</span>)<span class="sc">+</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(la_ejscreen_centroids)<span class="sc">+</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(<span class="at">fill =</span> <span class="st">'red'</span>)<span class="sc">+</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_graticules</span>()<span class="sc">+</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>()<span class="sc">+</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">main.title =</span> <span class="st">'Map of Wastewater Discharge by Census Block Groups in LA County'</span>) <span class="sc">+</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"LEFT"</span>,<span class="st">"BOTTOM"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Deprecated tmap v3 code detected. Code translated to v4</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 
 
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{garcia2023,
